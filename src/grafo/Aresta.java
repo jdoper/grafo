@@ -47,6 +47,9 @@ public class Aresta {
 		if (vertice1.getElemento() == vertice.getElemento()) {
 			return vertice2;
 		}
-		return vertice1;
+		else if (vertice2.getElemento() == vertice.getElemento()) {
+			return vertice1;
+		}
+		return null;
 	}
 }

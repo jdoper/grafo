@@ -15,28 +15,38 @@ public class Grafo {
 	}
 	
 	public Vertice oposto(Vertice vertice, Aresta aresta) {
-		return null;
+		return aresta.oposto(vertice);
 	}
 	
 	public boolean isAdjacente(Vertice vertice1, Vertice vertice2) {
 		return false;
 	}
 	
-	public void substituir(Vertice vertice, Object elemento) {}
+	public void substituir(Vertice vertice, int elemento) {
+		vertice.setElemento(elemento);
+	}
 	
-	public void substituir(Aresta aresta, Object elemento) {}
+	public void substituir(Aresta aresta, int elemento) {
+		aresta.setElemento(elemento);
+	}
 	
 	
 	/*
 	 * Atualizadores
 	 * */
 	
-	public Vertice inserirVertice(Object elemento) {
-		return null;
+	public Vertice inserirVertice(int elemento) {
+		Vertice vertice = new Vertice(elemento);
+		vertices.add(vertice);
+		return vertice;
 	}
 	
-	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, Object elemento) {
-		return null;
+	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {
+		Aresta aresta = new Aresta(elemento);
+		aresta.setVertice1(vertice1);
+		aresta.setVertice2(vertice2);
+		arestas.add(aresta);
+		return aresta;
 	}
 	
 	public Object removerVertice(Vertice vertice) {
@@ -56,11 +66,11 @@ public class Grafo {
 		return null;
 	}
 	
-	public Object[] vertices() {
-		return null;
+	public ArrayList<Vertice> vertices() {
+		return vertices;
 	}
 	
-	public Object[] arestas() {
-		return null;
+	public ArrayList<Aresta> arestas() {
+		return arestas;
 	}
 }
