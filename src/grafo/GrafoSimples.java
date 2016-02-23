@@ -25,10 +25,6 @@ public class GrafoSimples {
 		return aresta.oposto(vertice);
 	}
 	
-	/*
-	 * Busca os indices dos vertices e verifica se existe uma aresta
-	 * na posição onde os vertices se encontram na matriz
-	 * */
 	public boolean isAdjacente(Vertice vertice1, Vertice vertice2) {
 		int indiceVertice1 = vertices.indexOf(vertice1);
 		int indiceVertice2 = vertices.indexOf(vertice2);
@@ -83,24 +79,35 @@ public class GrafoSimples {
 	};
 	
 	public int removerVertice(Vertice vertice) {
-		/*
 		int indiceVertice = vertices.indexOf(vertice);
-		
-		qtdVertices--;
-		Aresta[][] arestasTemp = new Aresta[qtdVertices][qtdVertices];
-		for (int i = 0; i < qtdVertices + 1; i++) {
-			for (int j = 0; j < qtdVertices + 1; j++) {
-				if (j != indiceVertice) {
-					
+	
+		Aresta[][] arestasTemp = new Aresta[qtdVertices - 1][qtdVertices - 1];
+		for (int i = 0; i < qtdVertices; i++) {
+			// Pula a linha do Vertice na matriz de adjacencia
+			if (i == indiceVertice) {
+				i++;
+				continue;
+			}
+			
+			for (int j = 0; j < qtdVertices; j++) {
+				// Pula a coluna do Vertice na matriz de adjacencia
+				if (j == indiceVertice) {
+					j++;
+					continue;
 				}
 				
-				arestasTemp[i][j] = arestas[i][j];
+				if (j > indiceVertice) {
+					arestasTemp[i][j-1] = arestas[i][j];
+				}
+				else {
+					arestasTemp[i][j] = arestas[i][j];
+				}
 			}
 		}
 		arestas = arestasTemp;
-		*/
+		qtdVertices--;
 		
-		return 0;
+		return vertice.getElemento();
 	}
 	
 	public int removerAresta(Aresta aresta) {
