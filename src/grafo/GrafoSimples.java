@@ -17,8 +17,8 @@ public class GrafoSimples {
 	 * Acessadores
 	 * */
 	
-	public Object[] finalVertices(Aresta aresta) {
-		return null;
+	public Vertice[] finalVertices(Aresta aresta) {
+		return new Vertice[] {aresta.getVerticeOrigem(), aresta.getVerticeDestino()};
 	}
 	
 	public Vertice oposto(Vertice vertice, Aresta aresta) {

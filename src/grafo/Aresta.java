@@ -48,6 +48,11 @@ public class Aresta {
 		this.verticeDestino = verticeDestino;
 	}
 	
+	
+	/*
+	 * Auxiliares
+	 * */
+	
 	public Vertice oposto(Vertice vertice) {
 		if (verticeOrigem.getElemento() == vertice.getElemento()) {
 			return verticeDestino;
