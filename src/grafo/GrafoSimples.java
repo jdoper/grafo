@@ -82,8 +82,25 @@ public class GrafoSimples {
 		return aresta;
 	};
 	
-	public Object removerVertice(Vertice vertice) {
-		return null;
+	public int removerVertice(Vertice vertice) {
+		/*
+		int indiceVertice = vertices.indexOf(vertice);
+		
+		qtdVertices--;
+		Aresta[][] arestasTemp = new Aresta[qtdVertices][qtdVertices];
+		for (int i = 0; i < qtdVertices + 1; i++) {
+			for (int j = 0; j < qtdVertices + 1; j++) {
+				if (j != indiceVertice) {
+					
+				}
+				
+				arestasTemp[i][j] = arestas[i][j];
+			}
+		}
+		arestas = arestasTemp;
+		*/
+		
+		return 0;
 	}
 	
 	public int removerAresta(Aresta aresta) {
@@ -101,8 +118,17 @@ public class GrafoSimples {
 	 * Interadores
 	 * */
 	
-	public Object[] arestasIncidentes(Vertice vertice) {
-		return null;
+	public ArrayList<Aresta> arestasIncidentes(Vertice vertice) {
+		ArrayList<Aresta> arestasTemp = new ArrayList<Aresta>();
+		int indiceVertice = vertices.indexOf(vertice);
+		
+		for (int i = 0; i < qtdVertices + 1; i++) {
+			if (arestas[indiceVertice][i] != null) {
+				arestasTemp.add(arestas[indiceVertice][i]);
+			}
+		}
+		
+		return arestasTemp;
 	}
 	
 	public ArrayList<Vertice> vertices() {
@@ -110,6 +136,14 @@ public class GrafoSimples {
 	}
 	
 	public ArrayList<Aresta> arestas() {
-		return null;
+		ArrayList<Aresta> arestasTemp = new ArrayList<Aresta>();
+		
+		for (int i = 0; i < qtdVertices; i++) {
+			for (int j = 0; j < qtdVertices; j++) {
+				arestasTemp.add(arestas[i][j]);
+			}
+		}
+		
+		return arestasTemp;
 	}
 }
