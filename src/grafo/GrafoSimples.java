@@ -57,9 +57,7 @@ public class GrafoSimples {
 	 * */
 	
 	public Vertice inserirVertice(int elemento) {
-		Vertice vertice = new Vertice(elemento);
-		vertices.add(vertice);
-		return vertice;
+		return null;
 	}
 	
 	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {
