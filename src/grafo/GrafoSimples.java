@@ -77,17 +77,23 @@ public class GrafoSimples {
 		int indiceVertice2 = vertices.indexOf(vertice2);
 		
 		Aresta aresta = new Aresta(elemento);
-		arestas[indiceVertice1][indiceVertice2] = arestas[indiceVertice1][indiceVertice2] = aresta;
+		arestas[indiceVertice1][indiceVertice2] = arestas[indiceVertice2][indiceVertice1] = aresta;
 		
 		return aresta;
-	}
+	};
 	
 	public Object removerVertice(Vertice vertice) {
 		return null;
 	}
 	
-	public Object removerAresta(Aresta aresta) {
-		return null;
+	public int removerAresta(Aresta aresta) {
+		int indiceOrigem = vertices.indexOf(aresta.getVerticeOrigem());
+		int indiceDestino = vertices.indexOf(aresta.getVerticeDestino());
+		
+		int elemento = arestas[indiceOrigem][indiceDestino].getElemento();
+		arestas[indiceOrigem][indiceDestino] = arestas[indiceDestino][indiceOrigem] = null;
+		
+		return elemento;
 	}
 	
 	
