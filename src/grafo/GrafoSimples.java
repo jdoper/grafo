@@ -25,7 +25,17 @@ public class GrafoSimples {
 		return aresta.oposto(vertice);
 	}
 	
+	/*
+	 * Busca os indices dos vertices e verifica se existe uma aresta
+	 * na posição onde os vertices se encontram na matriz
+	 * */
 	public boolean isAdjacente(Vertice vertice1, Vertice vertice2) {
+		int indiceVertice1 = vertices.indexOf(vertice1);
+		int indiceVertice2 = vertices.indexOf(vertice2);
+		
+		if (arestas[indiceVertice1][indiceVertice2] != null) {
+			return true;
+		}
 		return false;
 	}
 	
