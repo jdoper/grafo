@@ -96,8 +96,14 @@ public class GrafoSimples {
 					continue;
 				}
 				
-				if (j > indiceVertice) {
-					arestasTemp[i][j-1] = arestas[i][j];
+				if (i > indiceVertice && j > indiceVertice) {
+					arestasTemp[i-1][j-1] = arestas[i][j];
+				}
+				else if (i > indiceVertice) {
+					arestasTemp[i-1][j] = arestas[i][j];
+				}
+				else if (j > indiceVertice) {
+					arestasTemp[1][j-1] = arestas[i][j];
 				}
 				else {
 					arestasTemp[i][j] = arestas[i][j];
@@ -114,10 +120,13 @@ public class GrafoSimples {
 		int indiceOrigem = vertices.indexOf(aresta.getVerticeOrigem());
 		int indiceDestino = vertices.indexOf(aresta.getVerticeDestino());
 		
-		int elemento = arestas[indiceOrigem][indiceDestino].getElemento();
+		Aresta arestaTemp = arestas[indiceOrigem][indiceDestino];
+		arestaTemp.setVerticeOrigem(null);
+		arestaTemp.setVerticeDestino(null);
+		
 		arestas[indiceOrigem][indiceDestino] = arestas[indiceDestino][indiceOrigem] = null;
 		
-		return elemento;
+		return arestaTemp.getElemento();
 	}
 	
 	
