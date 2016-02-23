@@ -57,10 +57,14 @@ public class GrafoSimples {
 	 * */
 	
 	public Vertice inserirVertice(int elemento) {
-		return null;
+		Vertice vertice = new Vertice(elemento);
+		vertices.add(vertice);
+		atualizarMatriz();
+
+		return vertice;
 	}
 	
-	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {
+	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {		
 		return null;
 	}
 	
@@ -87,5 +91,21 @@ public class GrafoSimples {
 	
 	public ArrayList<Aresta> arestas() {
 		return null;
+	}
+	
+	
+	/*
+	 * Auxiliares
+	 * */
+	
+	private void atualizarMatriz() {
+		qtdVertices++;
+		Aresta[][] arestasTemp = new Aresta[qtdVertices][qtdVertices];
+		for (int i = 0; i < qtdVertices; i++) {
+			for (int j = 0; j < qtdVertices; j++) {
+				arestasTemp[i][j] = arestas[i][j];
+			}
+		}
+		arestas = arestasTemp;
 	}
 }
