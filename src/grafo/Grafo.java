@@ -1,76 +1,139 @@
 package grafo;
 
-import java.util.ArrayList;
-
-public class Grafo {
-	ArrayList<Vertice> vertices = new ArrayList<Vertice>();
-	ArrayList<Aresta> arestas = new ArrayList<Aresta>();
+/**
+ * @author decio
+ *
+ */
+public interface Grafo {
 	
 	/*
-	 * Acessadores
+	 * Métodos Acessadores
 	 * */
 	
-	public Object[] finalVertices(Aresta aresta) {
-		return null;
-	}
+	/**
+	 * Retorna um array armazenando os vértices finais da aresta passada.
+	 * 
+	 * @param aresta
+	 * 
+	 * @return Tipo: Vertice[]
+	 */ 
+	public Vertice[] finalVertices(Aresta aresta);
 	
-	public Vertice oposto(Vertice vertice, Aresta aresta) {
-		return aresta.oposto(vertice);
-	}
+	/**
+	 * Retorna o vértice oposto da aresta.
+	 * 
+	 * @param vertice
+	 * @param aresta
+	 * 
+	 * @return Tipo: Vertice
+	 */
+	public Vertice oposto(Vertice vertice, Aresta aresta);
 	
-	public boolean isAdjacente(Vertice vertice1, Vertice vertice2) {
-		return false;
-	}
+	/**
+	 * Verifica se os vertices passados são adjacentes
+	 * 
+	 * @param verticeInicial
+	 * @param verticeFinal
+	 * 
+	 * @return Tipo: booelan
+	 */
+	public boolean ehAdjacente(Vertice verticeInicial, Vertice verticeFinal);
 	
-	public void substituir(Vertice vertice, int elemento) {
-		vertice.setElemento(elemento);
-	}
+	/**
+	 * Substitui o valor armazenado no vértice
+	 * 
+	 * @param vertice
+	 * @param valor
+	 * 
+	 * @return Tipo: Sem retorno
+	 */
+	public void substituir(Vertice vertice, double valor);
 	
-	public void substituir(Aresta aresta, int elemento) {
-		aresta.setElemento(elemento);
-	}
+	/**
+	 * Substitui o valor armazenado na aresta
+	 * 
+	 * @param aresta
+	 * @param valor
+	 * 
+	 * @return Tipo: Sem retorno
+	 */
+	public void substituir(Aresta aresta, double valor);
+	
+	/**
+	 * Retorna a ordem do grafo
+	 * 
+	 * @return Tipo: int
+	 */
+	public int ordem();
 	
 	
 	/*
-	 * Atualizadores
+	 * Métodos Atualizadores
 	 * */
 	
-	public Vertice inserirVertice(int elemento) {
-		Vertice vertice = new Vertice(elemento);
-		vertices.add(vertice);
-		return vertice;
-	}
+	/**
+	 * Insere um novo vertice com o valor passado
+	 * 
+	 * @param valor
+	 * 
+	 * @return Tipo: Vertice
+	 */
+	public Vertice inserirVertice(double valor);
 	
-	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {
-		Aresta aresta = new Aresta(elemento);
-		aresta.setVertice1(vertice1);
-		aresta.setVertice2(vertice2);
-		arestas.add(aresta);
-		return aresta;
-	}
+	/**
+	 * Insere uma nova aresta que liga os vertices e armazena o valor
+	 * 
+	 * @param verticeIncial
+	 * @param verticeFinal
+	 * @param valor
+	 * 
+	 * @return Tipo: Aresta
+	 */
+	public Aresta inserirAresta(Vertice verticeIncial, Vertice verticeFinal, double valor);
 	
-	public Object removerVertice(Vertice vertice) {
-		return null;
-	}
+	/**
+	 * Remove o vertice e todas as arestas incidentes
+	 * 
+	 * @param vertice
+	 * 
+	 * @return Tipo: double
+	 */
+	public double removerVertice(Vertice vertice);
 	
-	public Object removerAresta(Aresta aresta) {
-		return null;
-	}
+	/**
+	 * Remove a aresta retornando o valor armazenado
+	 * 
+	 * @param aresta
+	 * 
+	 * @return Tipo: double
+	 */
+	public double removerAresta(Aresta aresta);
 	
 	
 	/*
-	 * Interadores
+	 * Métodos Interadores
 	 * */
 	
-	public Object[] arestasIncidentes(Vertice vertice) {
-		return null;
-	}
+	/**
+	 * Retorna um array com as arestas incidentes no vertice
+	 * 
+	 * @param vertice
+	 * 
+	 * @return Tipo: Aresta[]
+	 */
+	public Aresta[] arestasIncidentes(Vertice vertice);
 	
-	public ArrayList<Vertice> vertices() {
-		return vertices;
-	}
+	/**
+	 * Retorna um array com todas os vertices do grafo
+	 * 
+	 * @return Tipo: Vertice[]
+	 */
+	public Vertice[] vertices();
 	
-	public ArrayList<Aresta> arestas() {
-		return arestas;
-	}
+	/**
+	 * Retorna um array com todas as arestas do grafo
+	 * 
+	 * @return Tipo: Aresta[]
+	 */
+	public Aresta[] arestas();
 }

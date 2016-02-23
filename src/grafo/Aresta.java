@@ -2,8 +2,8 @@ package grafo;
 
 public class Aresta {
 	public int elemento;
-	public Vertice vertice1;
-	public Vertice vertice2;
+	public Vertice verticeOrigem;
+	public Vertice verticeDestino;
 	
 	/*
 	 * Construtores
@@ -18,37 +18,42 @@ public class Aresta {
 	/*
 	 * Acessadores
 	 * */
-	
+
 	public int getElemento() {
 		return elemento;
 	}
 
-	public Vertice getVertice1() {
-		return vertice1;
-	}
-
-	public void setVertice1(Vertice vertice1) {
-		this.vertice1 = vertice1;
-	}
-
-	public Vertice getVertice2() {
-		return vertice2;
-	}
-
-	public void setVertice2(Vertice vertice2) {
-		this.vertice2 = vertice2;
-	}
 
 	public void setElemento(int elemento) {
 		this.elemento = elemento;
 	}
+
+
+	public Vertice getVerticeOrigem() {
+		return verticeOrigem;
+	}
+
+
+	public void setVerticeOrigem(Vertice verticeOrigem) {
+		this.verticeOrigem = verticeOrigem;
+	}
+
+
+	public Vertice getVerticeDestino() {
+		return verticeDestino;
+	}
+
+
+	public void setVerticeDestino(Vertice verticeDestino) {
+		this.verticeDestino = verticeDestino;
+	}
 	
 	public Vertice oposto(Vertice vertice) {
-		if (vertice1.getElemento() == vertice.getElemento()) {
-			return vertice2;
+		if (verticeOrigem.getElemento() == vertice.getElemento()) {
+			return verticeDestino;
 		}
-		else if (vertice2.getElemento() == vertice.getElemento()) {
-			return vertice1;
+		else if (verticeDestino.getElemento() == vertice.getElemento()) {
+			return verticeOrigem;
 		}
 		return null;
 	}
