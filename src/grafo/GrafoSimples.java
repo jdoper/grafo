@@ -66,8 +66,8 @@ public class GrafoSimples {
 		
 		qtdVertices++;
 		Aresta[][] arestasTemp = new Aresta[qtdVertices][qtdVertices];
-		for (int i = 0; i <= qtdVertices ; i++) {
-			for (int j = 0; j <= qtdVertices; j++) {
+		for (int i = 0; i < qtdVertices - 1; i++) {
+			for (int j = 0; j < qtdVertices - 1; j++) {
 				arestasTemp[i][j] = arestas[i][j];
 			}
 		}
@@ -76,12 +76,17 @@ public class GrafoSimples {
 		return vertice;
 	}
 	
-	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {		
+	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento, boolean readFile) {		
 		int indiceVertice1 = vertices.indexOf(vertice1);
 		int indiceVertice2 = vertices.indexOf(vertice2);
 		
 		Aresta aresta = new Aresta(elemento);
-		arestas[indiceVertice1][indiceVertice2] = arestas[indiceVertice2][indiceVertice1] = aresta;
+		if (readFile) {
+			arestas[indiceVertice1][indiceVertice2] = aresta;
+		}
+		else {
+			arestas[indiceVertice1][indiceVertice2] = arestas[indiceVertice2][indiceVertice1] = aresta;
+		}
 		
 		return aresta;
 	};
@@ -142,6 +147,29 @@ public class GrafoSimples {
 	 * Interadores
 	 * */
 	
+	
+	
+	public void lerMatriz() {
+		String matriz = "";
+		
+		for (int i = 0; i < qtdVertices - 1; i++) {
+			for (int j = 0; j < qtdVertices - 1; j++) {
+				if (arestas[i][j] != null) {
+					matriz += String.valueOf(arestas[i][j].getElemento()) + ", ";
+					continue;
+				}
+				matriz += "_, ";
+			}
+			matriz += "\n";
+		}
+		
+		System.out.println(matriz);
+	}
+	
+	public Aresta[][] getArestas() {
+		return arestas;
+	}
+
 	public ArrayList<Aresta> arestasIncidentes(Vertice vertice) {
 		ArrayList<Aresta> arestasTemp = new ArrayList<Aresta>();
 		int indiceVertice = vertices.indexOf(vertice);
@@ -183,19 +211,20 @@ public class GrafoSimples {
         int row = 0;
         
         try {
+        	size = 6;
+		    for (int i = 0; i < size; i++) {
+		    	inserirVertice(0);
+		    }
+        	
 			while ((line = buffer.readLine()) != null) {
 			    String[] vals = line.trim().split("\\s+");
-
-			    if (matrizDoArquivo == null) {
-			        size = vals.length;
-			        matrizDoArquivo = new int[size][size];
-			    }
-
+			    size = vals.length;
+			 
 			    for (int col = 0; col < size; col++) {
-			        inserirVertice(col);
-			        inserirAresta(vertices.get(row), vertices.get(col), Integer.parseInt(vals[col]));
+			        inserirAresta(vertices.get(row), vertices.get(col), Integer.parseInt(vals[col]), true);
 			    }
 			    row++;
+			    lerMatriz();
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
