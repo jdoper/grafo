@@ -26,7 +26,6 @@ public class GrafoSimples {
 		else {
 			ArrayList<Elemento> S = new ArrayList<Elemento>(); // S
 			Vertice primeiro = vertices.get(0); // Vertice inicial
-			// S.add(new Elemento(primeiro, 1, 0, 0, true)); // Seta elemento com false para que não seja visitado
 			int posicao = -1; // Posição do Vertice de referencia
 			int valor = 99999999; // Valor auxiliar para verificar elemento que vai para S
 			int qtdElementos = vertices.size() - 1; // Regula o fim da interação sobre os elementos
@@ -289,7 +288,7 @@ public class GrafoSimples {
 	
 	
 	/*
-	 * Menor caminho
+	 * Leitura de arquivo
 	 * */
 	
 	public void lerArquivo(String file){
@@ -316,7 +315,6 @@ public class GrafoSimples {
 			        inserirAresta(vertices.get(row), vertices.get(col), Integer.parseInt(vals[col]), true);
 			    }
 			    row++;
-			    lerMatriz();
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
