@@ -1,5 +1,9 @@
 package grafo;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GrafoSimples {
@@ -7,10 +11,14 @@ public class GrafoSimples {
 	private Aresta[][] arestas;
 	private int qtdVertices;
 	
+	private int[][] matrizDoArquivo;
+	private int size = -1;
+	
 	public GrafoSimples() {
 		this.vertices = new ArrayList<Vertice>();
-		this.arestas = new Aresta[0][0];
 		this.qtdVertices = 0;
+		this.arestas = new Aresta[1][1];
+		
 	}
 	
 	/*
@@ -58,8 +66,8 @@ public class GrafoSimples {
 		
 		qtdVertices++;
 		Aresta[][] arestasTemp = new Aresta[qtdVertices][qtdVertices];
-		for (int i = 0; i < qtdVertices; i++) {
-			for (int j = 0; j < qtdVertices; j++) {
+		for (int i = 0; i <= qtdVertices ; i++) {
+			for (int j = 0; j <= qtdVertices; j++) {
 				arestasTemp[i][j] = arestas[i][j];
 			}
 		}
@@ -161,5 +169,38 @@ public class GrafoSimples {
 		}
 		
 		return arestasTemp;
+	}
+	
+	public void leArquivo(String file){
+		BufferedReader buffer = null;
+		try {
+			buffer = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+        String line;
+        int row = 0;
+        
+        try {
+			while ((line = buffer.readLine()) != null) {
+			    String[] vals = line.trim().split("\\s+");
+
+			    if (matrizDoArquivo == null) {
+			        size = vals.length;
+			        matrizDoArquivo = new int[size][size];
+			    }
+
+			    for (int col = 0; col < size; col++) {
+			        inserirVertice(col);
+			        inserirAresta(vertices.get(row), vertices.get(col), Integer.parseInt(vals[col]));
+			    }
+			    row++;
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
