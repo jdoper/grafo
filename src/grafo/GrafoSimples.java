@@ -82,27 +82,27 @@ public class GrafoSimples {
 			while (qtdElementos > 0) {
 				for (Elemento elemento : S) {
 					if (!elemento.isCheck()) {
-						Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(anterior.getVertice())];
+						// Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(anterior.getVertice())];
 						Aresta b = arestas[vertices.indexOf(anterior.getVertice())][vertices.indexOf(elemento.getVertice())];
 						
 						// Verifica se existem Arestas ligando os Vertices
-						if (vertices.indexOf(elemento.getVertice()) != vertices.indexOf(primeiro) && a != null && b != null) {
+						if (vertices.indexOf(elemento.getVertice()) != vertices.indexOf(primeiro) && b != null) {
 							// D[v]=min(D[v],d[w]+L(w,v))
-							if (elemento.getValor() > (a.getElemento() + b.getElemento())) {
+							if (b.getElemento() != -1 && elemento.getValor() > (anterior.getValor() + b.getElemento())) {
 								elemento.setPosicao(vertices.indexOf(anterior.getVertice()));
-								elemento.setValor(a.getElemento() + b.getElemento());
-								
-								// Atualiza referencia para elemento com menor custo
-								if (elemento.getValor() < valor) {
-									posicao = vertices.indexOf(elemento.getVertice());
-									valor = elemento.getValor();
-								}
+								elemento.setValor(anterior.getValor() + b.getElemento());
 							}
+						}
+						
+						// Atualiza referencia para elemento com menor custo
+						if (elemento.getValor() < valor) {
+							posicao = vertices.indexOf(elemento.getVertice());
+							valor = elemento.getValor();
 						}
 					}
 				}
 				S.get(posicao).setCheck(true); // Seta elemento como visitado
-				-- qtdElementos;
+				--qtdElementos;
 				anterior = S.get(posicao);
 				valor = 99999999;
 			}
