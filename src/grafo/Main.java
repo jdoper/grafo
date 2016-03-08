@@ -3,10 +3,9 @@ package grafo;
 public class Main {
 
 	public static void main(String[] args) {
-		int indice = 0;
-		int[] elementos = {1,2,3,4,5};
-		
-		System.out.println(elementos[++indice]);
+		int a = 12;
+		int b = a;
+		b = b - 2;
+		System.out.println(a + " - " + b);
 	}
-
 }

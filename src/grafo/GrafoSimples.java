@@ -13,6 +13,66 @@ public class GrafoSimples {
 		this.qtdVertices = 0;
 	}
 	
+	
+	public void getMenorCaminho() {
+		if (vertices.size() < 2) {
+			System.out.println("Não existem pontos suficientes");
+		}
+		else {
+			ArrayList<Elemento> S = new ArrayList<Elemento>();
+			Vertice primeiro = vertices.get(0);
+			S.add(new Elemento(primeiro, 0, 0, true));
+			int posicao = -1;
+			int valor = 99999999;
+			int qtdElementos = vertices.size() - 1;
+			
+			for (Vertice vertice : vertices) {
+				Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(vertice)];
+				
+				if (vertices.indexOf(vertice) != vertices.indexOf(primeiro) && a != null) {
+					int temp = a.getElemento();
+					S.add(new Elemento(vertice, temp, vertices.indexOf(primeiro), false));
+					
+					if (temp < valor) {
+						posicao = vertices.indexOf(vertice);
+					}
+				}
+			}
+			S.get(posicao).setCheck(true);
+			-- qtdElementos;
+			
+			Elemento anterior = S.get(posicao);
+			Vertice W = S.get(posicao).getVertice();
+			int d = S.get(posicao).getValor();
+			valor = 99999999;
+			
+			while (qtdElementos > 0) {
+				for (Elemento elemento : S) {
+					if (!elemento.isCheck()) {
+						Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(anterior.getVertice())];
+						Aresta b = arestas[vertices.indexOf(anterior.getVertice())][vertices.indexOf(elemento.getVertice())];
+						
+						if (vertices.indexOf(elemento.getVertice()) != vertices.indexOf(primeiro) &&
+							a != null && b != null) {
+							if (elemento.getValor() > a.getElemento() + b.getElemento()) {
+								elemento.setPosicao(vertices.indexOf(anterior.getVertice()));
+								elemento.setValor(a.getElemento() + b.getElemento());
+								
+								if (elemento.getValor() < valor) {
+									posicao = vertices.indexOf(elemento.getVertice());
+								}
+								
+							}
+						}
+					}
+				}
+				S.get(posicao).setCheck(true);
+				-- qtdElementos;
+			}
+		}
+	}
+	
+	
 	/*
 	 * Acessadores
 	 * */
@@ -58,8 +118,8 @@ public class GrafoSimples {
 		
 		qtdVertices++;
 		Aresta[][] arestasTemp = new Aresta[qtdVertices][qtdVertices];
-		for (int i = 0; i < qtdVertices; i++) {
-			for (int j = 0; j < qtdVertices; j++) {
+		for (int i = 0; i < qtdVertices - 1; i++) {
+			for (int j = 0; j < qtdVertices - 1; j++) {
 				arestasTemp[i][j] = arestas[i][j];
 			}
 		}
@@ -162,4 +222,9 @@ public class GrafoSimples {
 		
 		return arestasTemp;
 	}
+	
+	
+	// Dijkstra
+	
+
 }
