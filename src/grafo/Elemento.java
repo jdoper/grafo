@@ -2,6 +2,7 @@ package grafo;
 
 public class Elemento {
 	private Vertice vertice;
+	private int valorVertice;
 	private int valor;
 	private int posicao;
 	private boolean check;
@@ -10,9 +11,10 @@ public class Elemento {
 		super();
 	}
 
-	public Elemento(Vertice vertice, int valor, int posicao, boolean check) {
+	public Elemento(Vertice vertice, int valorVertice, int valor, int posicao, boolean check) {
 		super();
 		this.vertice = vertice;
+		this.valorVertice = valorVertice;
 		this.valor = valor;
 		this.posicao = posicao;
 		this.check = check;
@@ -50,8 +52,16 @@ public class Elemento {
 		this.check = check;
 	}
 
+	public int getValorVertice() {
+		return valorVertice;
+	}
+
+	public void setValorVertice(int valorVertice) {
+		this.valorVertice = valorVertice;
+	}
+
 	@Override
 	public String toString() {
-		return "V" + posicao + " (" + valor + ")";
+		return "V" + valorVertice + " (V" + (posicao + 1) + " - " + valor + ") " + check;
 	}
 }

@@ -10,13 +10,13 @@ public class GrafoSimples {
 	private ArrayList<Vertice> vertices;
 	private Aresta[][] arestas;
 	private int qtdVertices;
-	private int size = 6;
+	private int size;
 	
 	public GrafoSimples(int size) {
 		this.vertices = new ArrayList<Vertice>();
 		this.qtdVertices = 0;
 		this.arestas = new Aresta[1][1];
-		this.size = 6;
+		this.size = size;
 	}
 	
 	public ArrayList<Elemento> getMenorCaminho() {
@@ -26,12 +26,12 @@ public class GrafoSimples {
 		else {
 			ArrayList<Elemento> S = new ArrayList<Elemento>(); // S
 			Vertice primeiro = vertices.get(0); // Vertice inicial
-			S.add(new Elemento(primeiro, 0, 0, true)); // Seta elemento com false para que não seja visitado
+			// S.add(new Elemento(primeiro, 1, 0, 0, true)); // Seta elemento com false para que não seja visitado
 			int posicao = -1; // Posição do Vertice de referencia
 			int valor = 99999999; // Valor auxiliar para verificar elemento que vai para S
 			int qtdElementos = vertices.size() - 1; // Regula o fim da interação sobre os elementos
 			
-			
+		
 			/*
 			 * Passo 1
 			 * */
@@ -44,21 +44,23 @@ public class GrafoSimples {
 			for (Vertice vertice : vertices) {
 				Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(vertice)];
 				
-				if (vertices.indexOf(vertice) != vertices.indexOf(primeiro) && a != null) {
+				if (vertices.indexOf(vertice) != vertices.indexOf(primeiro) && a != null && a.getElemento() != -1) {
 					int temp = a.getElemento();
-					S.add(new Elemento(vertice, temp, vertices.indexOf(primeiro), false));
+					S.add(new Elemento(vertice, vertices.indexOf(vertice) + 1, temp, vertices.indexOf(primeiro), false));
 					
 					// Atualiza referencia para elemento com menor custo
-					if (temp < valor) {
+					if (valor > temp) {
 						posicao = vertices.indexOf(vertice);
+						valor = temp;
 					}
 				}
 				else {
-					S.add(new Elemento(vertice, 99999999, 0, false));
+					S.add(new Elemento(vertice, vertices.indexOf(vertice) + 1, 99999999, 0, false));
 				}
 			}
+			S.get(0).setCheck(true); // Seta primeiro elemento como visitado
 			S.get(posicao).setCheck(true); // Seta elemento como visitado
-			-- qtdElementos;
+			--qtdElementos;
 			
 			/*
 			 * FIM Passo 1
@@ -93,6 +95,7 @@ public class GrafoSimples {
 								// Atualiza referencia para elemento com menor custo
 								if (elemento.getValor() < valor) {
 									posicao = vertices.indexOf(elemento.getVertice());
+									valor = elemento.getValor();
 								}
 							}
 						}
@@ -100,6 +103,7 @@ public class GrafoSimples {
 				}
 				S.get(posicao).setCheck(true); // Seta elemento como visitado
 				-- qtdElementos;
+				anterior = S.get(posicao);
 				valor = 99999999;
 			}
 			return S;
@@ -240,8 +244,8 @@ public class GrafoSimples {
 	public void lerMatriz() {
 		String matriz = "";
 		
-		for (int i = 0; i < qtdVertices - 1; i++) {
-			for (int j = 0; j < qtdVertices - 1; j++) {
+		for (int i = 0; i < qtdVertices; i++) {
+			for (int j = 0; j < qtdVertices; j++) {
 				if (arestas[i][j] != null) {
 					matriz += String.valueOf(arestas[i][j].getElemento()) + ", ";
 					continue;
