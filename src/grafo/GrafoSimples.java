@@ -14,18 +14,28 @@ public class GrafoSimples {
 	}
 	
 	
-	public void getMenorCaminho() {
+	public ArrayList<Elemento> getMenorCaminho() {
 		if (vertices.size() < 2) {
-			System.out.println("Não existem pontos suficientes");
+			return null;
 		}
 		else {
-			ArrayList<Elemento> S = new ArrayList<Elemento>();
-			Vertice primeiro = vertices.get(0);
-			S.add(new Elemento(primeiro, 0, 0, true));
-			int posicao = -1;
-			int valor = 99999999;
-			int qtdElementos = vertices.size() - 1;
+			ArrayList<Elemento> S = new ArrayList<Elemento>(); // S
+			Vertice primeiro = vertices.get(0); // Vertice inicial
+			S.add(new Elemento(primeiro, 0, 0, true)); // Seta elemento com false para que não seja visitado
+			int posicao = -1; // Posição do Vertice de referencia
+			int valor = 99999999; // Valor auxiliar para verificar elemento que vai para S
+			int qtdElementos = vertices.size() - 1; // Regula o fim da interação sobre os elementos
 			
+			
+			/*
+			 * Passo 1
+			 * */
+			
+			/*
+			 * Verifica se existe uma Aresta ligando os vertices, se ouver
+			 * adiciona novo elemento na coleção. Caso seja o com menor valor,
+			 * ele se torna referencia e é adicionado a S
+			 * */
 			for (Vertice vertice : vertices) {
 				Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(vertice)];
 				
@@ -33,42 +43,65 @@ public class GrafoSimples {
 					int temp = a.getElemento();
 					S.add(new Elemento(vertice, temp, vertices.indexOf(primeiro), false));
 					
+					// Atualiza referencia para elemento com menor custo
 					if (temp < valor) {
 						posicao = vertices.indexOf(vertice);
 					}
 				}
+				else {
+					S.add(new Elemento(vertice, 0, 0, false));
+				}
 			}
-			S.get(posicao).setCheck(true);
+			S.get(posicao).setCheck(true); // Seta elemento como visitado
 			-- qtdElementos;
 			
-			Elemento anterior = S.get(posicao);
-			Vertice W = S.get(posicao).getVertice();
-			int d = S.get(posicao).getValor();
-			valor = 99999999;
+			/*
+			 * FIM Passo 1
+			 * */
 			
+			
+			/*
+			 * Passo 2
+			 * */
+			
+			Elemento anterior = S.get(posicao); // W
+			valor = 99999999; // Valor auxiliar para verificar elemento que vai para S
+			
+			/*
+			 * Enquanto ouverem elementos não visitados em S, eles terão seus
+			 * valores atualizados, como o custo para que se chegue ao Vertice e
+			 * por qual Vertice se deve passar caso seja necessário.
+			 * */
 			while (qtdElementos > 0) {
 				for (Elemento elemento : S) {
 					if (!elemento.isCheck()) {
 						Aresta a = arestas[vertices.indexOf(primeiro)][vertices.indexOf(anterior.getVertice())];
 						Aresta b = arestas[vertices.indexOf(anterior.getVertice())][vertices.indexOf(elemento.getVertice())];
 						
-						if (vertices.indexOf(elemento.getVertice()) != vertices.indexOf(primeiro) &&
-							a != null && b != null) {
-							if (elemento.getValor() > a.getElemento() + b.getElemento()) {
+						// Verifica se existem Arestas ligando os Vertices
+						if (vertices.indexOf(elemento.getVertice()) != vertices.indexOf(primeiro) && a != null && b != null) {
+							// D[v]=min(D[v],d[w]+L(w,v))
+							if (elemento.getValor() > (a.getElemento() + b.getElemento())) {
 								elemento.setPosicao(vertices.indexOf(anterior.getVertice()));
 								elemento.setValor(a.getElemento() + b.getElemento());
 								
+								// Atualiza referencia para elemento com menor custo
 								if (elemento.getValor() < valor) {
 									posicao = vertices.indexOf(elemento.getVertice());
 								}
-								
 							}
 						}
 					}
 				}
-				S.get(posicao).setCheck(true);
+				S.get(posicao).setCheck(true); // Seta elemento como visitado
 				-- qtdElementos;
+				valor = 99999999;
 			}
+			return S;
+			
+			/*
+			 * FIM Passo 2
+			 * */
 		}
 	}
 	
