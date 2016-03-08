@@ -49,7 +49,7 @@ public class GrafoSimples {
 					}
 				}
 				else {
-					S.add(new Elemento(vertice, 0, 0, false));
+					S.add(new Elemento(vertice, 99999999, 0, false));
 				}
 			}
 			S.get(posicao).setCheck(true); // Seta elemento como visitado
