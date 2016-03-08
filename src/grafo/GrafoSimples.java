@@ -1,18 +1,23 @@
 package grafo;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GrafoSimples {
 	private ArrayList<Vertice> vertices;
 	private Aresta[][] arestas;
 	private int qtdVertices;
+	private int size = 6;
 	
-	public GrafoSimples() {
+	public GrafoSimples(int size) {
 		this.vertices = new ArrayList<Vertice>();
-		this.arestas = new Aresta[0][0];
 		this.qtdVertices = 0;
+		this.arestas = new Aresta[1][1];
+		this.size = 6;
 	}
-	
 	
 	public ArrayList<Elemento> getMenorCaminho() {
 		if (vertices.size() < 2) {
@@ -161,12 +166,17 @@ public class GrafoSimples {
 		return vertice;
 	}
 	
-	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento) {		
+	public Aresta inserirAresta(Vertice vertice1, Vertice vertice2, int elemento, boolean readFile) {		
 		int indiceVertice1 = vertices.indexOf(vertice1);
 		int indiceVertice2 = vertices.indexOf(vertice2);
 		
 		Aresta aresta = new Aresta(elemento);
-		arestas[indiceVertice1][indiceVertice2] = arestas[indiceVertice2][indiceVertice1] = aresta;
+		if (readFile) {
+			arestas[indiceVertice1][indiceVertice2] = aresta;
+		}
+		else {
+			arestas[indiceVertice1][indiceVertice2] = arestas[indiceVertice2][indiceVertice1] = aresta;
+		}
 		
 		return aresta;
 	};
@@ -227,6 +237,23 @@ public class GrafoSimples {
 	 * Interadores
 	 * */
 	
+	public void lerMatriz() {
+		String matriz = "";
+		
+		for (int i = 0; i < qtdVertices - 1; i++) {
+			for (int j = 0; j < qtdVertices - 1; j++) {
+				if (arestas[i][j] != null) {
+					matriz += String.valueOf(arestas[i][j].getElemento()) + ", ";
+					continue;
+				}
+				matriz += "_, ";
+			}
+			matriz += "\n";
+		}
+		
+		System.out.println(matriz);
+	}
+
 	public ArrayList<Aresta> arestasIncidentes(Vertice vertice) {
 		ArrayList<Aresta> arestasTemp = new ArrayList<Aresta>();
 		int indiceVertice = vertices.indexOf(vertice);
@@ -257,7 +284,40 @@ public class GrafoSimples {
 	}
 	
 	
-	// Dijkstra
+	/*
+	 * Menor caminho
+	 * */
 	
+	public void lerArquivo(String file){
+		BufferedReader buffer = null;
+		try {
+			buffer = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
+        String line;
+        int row = 0;
+        
+        try {
+		    for (int i = 0; i < this.size; i++) {
+		    	inserirVertice(0);
+		    }
+        	
+			while ((line = buffer.readLine()) != null) {
+			    String[] vals = line.trim().split("\\s+");
+			    this.size = vals.length;
+			 
+			    for (int col = 0; col < this.size; col++) {
+			        inserirAresta(vertices.get(row), vertices.get(col), Integer.parseInt(vals[col]), true);
+			    }
+			    row++;
+			    lerMatriz();
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
